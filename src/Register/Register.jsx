@@ -29,13 +29,11 @@ const Register = () => {
                 <input className="bg-slate-500 py-2 px-4" type="text" placeholder="Your Name" name="name" id="" />
                 <input className="bg-slate-500 py-2 px-4" type="email" placeholder="Email Address" name="email" id="" />
                 <div className="relative">
-                    <input className="bg-slate-500 py-2 px-4 w-full" type={showPassword ? 'password' : 'text'} placeholder="Password" name="password" id="" />
+                    <input className="bg-slate-500 py-2 px-4 w-full" type={showPassword ? 'text' : 'password'} placeholder="Password" name="password" id="" />
                     <span onClick={() => setShowPassword(!showPassword)} className="absolute top-2 right-4 text-2xl">
                         {
-                            showPassword ? 
-                            <IoEyeOff />
-                            :
-                            <IoEye />
+                            showPassword ? <IoEye />   :
+                            <IoEyeOff />      
                         }
                     </span>
                 </div>
