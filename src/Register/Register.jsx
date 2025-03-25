@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import auth from "../components/firebase/firebase.config";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
@@ -17,6 +17,7 @@ const Register = () => {
         setSuccessMessage('');
         const userEmail = e.target.email.value;
         const userPassword = e.target.password.value;
+        const userName = e.target.name.value;
         console.log(userEmail, userPassword);
         if (userPassword.length < 6) {
             setErrorMessage('Password must be at least 6 charcaters long');
@@ -29,7 +30,12 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, userEmail, userPassword)
         .then(result => {
             console.log(result.user);
-            setSuccessMessage('Successfully Registered')
+            setSuccessMessage('Successfully Registered');
+
+            // update name
+            updateProfile(result.user, {
+                displayName: userName,
+            })
         })
         .catch(error => {
             console.error(error);
