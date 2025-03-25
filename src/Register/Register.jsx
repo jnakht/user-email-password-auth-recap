@@ -5,6 +5,10 @@ import { IoEyeOff } from "react-icons/io5";
 import { useState } from "react";
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const handleTermsAccepted = () => {
+        setTermsAccepted(!termsAccepted);
+    }
     const handleRegister = (e) => {
         e.preventDefault();
         const userEmail = e.target.email.value;
@@ -35,7 +39,11 @@ const Register = () => {
                         }
                     </span>
                 </div>
-                <input className="btn btn-primary" type="submit" value="Submit" />
+                <div className="flex gap-2 mt-6 mb-6">
+                      <input onClick={handleTermsAccepted} type="checkbox"  className="checkbox checkbox-success" />
+                      <p>Accept the terms and conditions</p>
+                </div>
+                <input disabled={!termsAccepted} className="btn btn-primary" type="submit" value="Submit" />
             </form>
         </div>
     );
