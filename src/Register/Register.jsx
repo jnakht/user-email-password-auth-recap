@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile} from "firebase/auth";
 import auth from "../components/firebase/firebase.config";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
@@ -42,6 +42,12 @@ const Register = () => {
             })
             .catch(() => {
                 console.log('profile update failed');
+            })
+
+            // send email verification
+            sendEmailVerification(result.user)
+            .then(() => {
+                alert('Please Check Your Email');
             })
         })
         .catch(error => {
