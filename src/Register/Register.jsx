@@ -36,6 +36,12 @@ const Register = () => {
             updateProfile(result.user, {
                 displayName: userName,
             })
+            .then(() => {
+                console.log('profile updated');
+            })
+            .catch(() => {
+                console.log('profile update failed');
+            })
         })
         .catch(error => {
             console.error(error);
