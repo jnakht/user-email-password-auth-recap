@@ -3,6 +3,7 @@ import auth from "../components/firebase/firebase.config";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -68,6 +69,7 @@ const Register = () => {
                       <p>Accept the terms and conditions</p>
                 </div>
                 <input disabled={!termsAccepted} className="btn btn-primary" type="submit" value="Submit" />
+                <p>Already Have an Account? Please <Link to='/login'>Login</Link></p>
                 {
                     errorMessage && <div>
                         <p className="text-3xl text-red-600">{errorMessage}</p>

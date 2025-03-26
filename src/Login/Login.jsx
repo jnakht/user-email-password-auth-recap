@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import auth from '../components/firebase/firebase.config';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -39,13 +40,16 @@ const Login = () => {
                                 <label className="fieldset-label">Email</label>
                                 <input type="email" 
                                 name='email' 
-                                className="input" placeholder="Email" />
+                                className="input" placeholder="Email"
+                                required />
                                 <label className="fieldset-label">Password</label>
                                 <input type="password" 
                                 name='password'
-                                className="input" placeholder="Password" />
+                                className="input" placeholder="Password"
+                                required />
                                 <div><a className="link link-hover">Forgot password?</a></div>
                                 <button className="btn btn-neutral mt-4">Login</button>
+                                <p>New Here? Please <Link to='/register'>Sign Up</Link></p>
                                 {
                                     errorMessage && <div>
                                         <p className='text-red-600 text-3xl'>{errorMessage}</p>
