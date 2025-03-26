@@ -1,5 +1,5 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useRef, useState } from 'react';
 import auth from '../components/firebase/firebase.config';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const emailRef = useRef();
     const handleLogin = (e) => {
         e.preventDefault();
         setErrorMessage('');
@@ -31,6 +32,24 @@ const Login = () => {
             setErrorMessage(error.message);
         })
     }
+    const handleForgotPassword = () => {
+        console.log(emailRef.current.value);
+        if (!emailRef.current.value) {
+            setErrorMessage('Please Provide an Email');
+            return;
+        }
+        else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailRef.current.value)) {
+            setErrorMessage("Please provide a valid email");
+            return;
+        }
+        sendPasswordResetEmail(auth, emailRef.current.value)
+        .then(() => {
+            alert("please check your email");
+        })
+        .catch(error => {
+            console.log('the password reset error is: ', error.message);
+        })
+    }
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -47,6 +66,7 @@ const Login = () => {
                             <fieldset className="fieldset">
                                 <label className="fieldset-label">Email</label>
                                 <input type="email" 
+                                ref={emailRef}
                                 name='email' 
                                 className="input" placeholder="Email"
                                 required />
@@ -55,7 +75,7 @@ const Login = () => {
                                 name='password'
                                 className="input" placeholder="Password"
                                 required />
-                                <div><a className="link link-hover">Forgot password?</a></div>
+                                <div><a onClick={handleForgotPassword} className="link link-hover">Forgot password?</a></div>
                                 <button className="btn btn-neutral mt-4">Login</button>
                                 <p>New Here? Please <Link to='/register'>Sign Up</Link></p>
                                 {
