@@ -1,9 +1,21 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
+import auth from '../components/firebase/firebase.config';
 
 const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log('login successful')
+        
+        const userEmail = e.target.email.value;
+        const userPassword = e.target.password.value;
+        signInWithEmailAndPassword(auth, userEmail, userPassword)
+        .then((result) => {
+            console.log(result.user)
+            console.log('login successful');
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
     return (
         <div className="hero bg-base-200 min-h-screen">
