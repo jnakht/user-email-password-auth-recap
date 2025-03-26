@@ -1,20 +1,25 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import auth from '../components/firebase/firebase.config';
 
+
 const Login = () => {
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const handleLogin = (e) => {
         e.preventDefault();
-        
+        setErrorMessage('');
+        setSuccessMessage('');
         const userEmail = e.target.email.value;
         const userPassword = e.target.password.value;
         signInWithEmailAndPassword(auth, userEmail, userPassword)
         .then((result) => {
             console.log(result.user)
-            console.log('login successful');
+            setSuccessMessage('Successfully Logged In');
         })
         .catch(error => {
             console.log(error);
+            setErrorMessage(error.message);
         })
     }
     return (
@@ -41,6 +46,16 @@ const Login = () => {
                                 className="input" placeholder="Password" />
                                 <div><a className="link link-hover">Forgot password?</a></div>
                                 <button className="btn btn-neutral mt-4">Login</button>
+                                {
+                                    errorMessage && <div>
+                                        <p className='text-red-600 text-3xl'>{errorMessage}</p>
+                                    </div>
+                                }
+                                {
+                                    successMessage && <div>
+                                        <p className='text-green-600 text-3xl'>{successMessage}</p>
+                                    </div>
+                                }
                             </fieldset>
                         </div>
                     </form>
